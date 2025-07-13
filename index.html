@@ -2,50 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Onixchatai Business App</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0057D8"/>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 2rem; text-align: center; color: #333; }
-    h1 { color: #0057D8; }
-    .btn { padding: 1rem 2rem; font-size: 1rem; margin: 10px; border: none; border-radius: 6px; cursor: pointer; }
-    .order-btn { background-color: #28a745; color: white; }
-    .chat-btn { background-color: #17a2b8; color: white; }
-    .install-btn { background-color: #0057D8; color: white; margin-top: 20px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onixchatai – Smart Chatbots and Mobile Ordering</title>
+  <meta name="description" content="Onixchatai helps local businesses grow with smart chatbots and mobile ordering systems tailored to your needs.">
+  <meta name="keywords" content="Chatbot, Mobile App Ordering, Small Business, AI Chat, Online Ordering, PWA, Local Business Support">
+  <meta property="og:title" content="Onixchatai – Smart Chatbots and Mobile Ordering">
+  <meta property="og:description" content="Your small business solution for automation and customer engagement.">
+  <link rel="canonical" href="https://onixchatai.github.io/index.html">
 </head>
 <body>
   <h1>Welcome to Onixchatai</h1>
   <p>Smart Chatbots and Mobile Ordering for Local Businesses</p>
-  <button class="btn order-btn">📲 Order Now</button>
-  <button class="btn chat-btn">💬 Chat with Us</button>
-  <br />
-  <button class="btn install-btn" id="installBtn">📥 Install App</button>
-
-  <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-    installBtn.style.display = 'none';
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        installBtn.style.display = 'none';
-      }
-    });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
+  <a href="services.html">See Our Services</a>
 </body>
 </html>
