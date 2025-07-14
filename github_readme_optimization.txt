@@ -1,4 +1,4 @@
-# 🤖 OnixChatAI - Smart Business Solutions
+# 🤖 Onix Chat AI - Connecting your Customer Experience
 
 > Empowering small and medium businesses with enterprise-level AI chatbots and mobile ordering platforms
 
