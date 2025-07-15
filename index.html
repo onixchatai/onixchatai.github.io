@@ -1,3 +1,30 @@
+<!-- Add this right before </body> tag in your index.html -->
+<div id="debug" style="position: fixed; bottom: 10px; right: 10px; background: black; color: white; padding: 10px; font-size: 12px; max-width: 300px; z-index: 9999;">
+  Debug Info
+</div>
+
+<script>
+// This will show you what's happening with your links
+document.addEventListener('DOMContentLoaded', function() {
+  const debugDiv = document.getElementById('debug');
+  let debugInfo = 'Links found: ' + document.querySelectorAll('a').length + '<br>';
+  
+  // Check each link
+  document.querySelectorAll('a').forEach((link, index) => {
+    link.style.border = '2px solid red'; // Highlight all links
+    
+    link.addEventListener('click', function(e) {
+      debugDiv.innerHTML = 'Clicked: ' + this.href + '<br>Text: ' + this.innerText;
+    });
+    
+    if (!link.href || link.href === '') {
+      debugInfo += `Link ${index + 1}: NO HREF!<br>`;
+    }
+  });
+  
+  debugDiv.innerHTML = debugInfo;
+});
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
