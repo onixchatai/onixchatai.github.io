@@ -3,12 +3,10 @@
 </div>
 
 <script>
-// This will show you what's happening with your links
 document.addEventListener('DOMContentLoaded', function() {
   const debugDiv = document.getElementById('debug');
   let debugInfo = 'Links found: ' + document.querySelectorAll('a').length + '<br>';
   
-  // Check each link
   document.querySelectorAll('a').forEach((link, index) => {
     link.style.border = '2px solid red'; // Highlight all links
     
