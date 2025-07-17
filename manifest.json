@@ -1,14 +1,19 @@
 {
   "name": "Onixchatai",
   "short_name": "Onixchatai",
-  "start_url": "index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#ff0000",
+  "theme_color": "#cc0000",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/icon.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
