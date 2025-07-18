@@ -1,31 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>OnixChatAI Demo</title>
-    <style>
-        body { font-family: 'Arial', sans-serif; background: #f4f4f4; color: #333; padding: 2rem; text-align: center; }
-        h1 { color: #007BFF; }
-        p { font-size: 1.2rem; max-width: 700px; margin: auto; }
-        .demo-box {
-            background: white; 
-            padding: 2rem; 
-            margin: 2rem auto; 
-            border-radius: 10px; 
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
-            max-width: 700px;
-        }
-    </style>
-</head>
-<body>
-    <div class="demo-box">
-        <h1>Welcome to the OnixChatAI Interactive Demo</h1>
-        <p>This is a placeholder demo page. Here you'll soon find an interactive showcase of our AI chatbot and mobile ordering experience. Stay tuned!</p>
-    </div>
-</body>
-</html><!-- Chatbot Demo Container -->
+<!-- Chatbot Demo Container -->
 <div id="chatbot" style="max-width: 400px; margin: 20px auto; border: 1px solid #ccc; border-radius: 8px; font-family: Arial, sans-serif;">
   <div id="chatbox" style="height: 300px; overflow-y: auto; padding: 10px; background: #f9f9f9;"></div>
   <input id="userInput" type="text" placeholder="Type your message..." style="width: 80%; padding: 10px; border: none; border-top: 1px solid #ccc; outline: none;" />
@@ -89,5 +62,4 @@
   userInput.addEventListener('keypress', e => {
     if(e.key === 'Enter') sendMessage();
   });
-                             </script>
-
+</script>
