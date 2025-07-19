@@ -1,0 +1,16 @@
+# Create the CNAME file with the custom domain
+cname_path = os.path.join(base_dir, "CNAME")
+
+with open(cname_path, "w") as f:
+    f.write("onixchatai.com\n")
+
+# Update the final ZIP package with the CNAME file included
+final_with_cname_zip = "/mnt/data/onixchatai-github-ready.zip"
+with ZipFile(final_with_cname_zip, "w") as zipf:
+    for root, dirs, filenames in os.walk(base_dir):
+        for filename in filenames:
+            filepath = os.path.join(root, filename)
+            arcname = os.path.relpath(filepath, base_dir)
+            zipf.write(filepath, arcname)
+
+final_with_cname_zip
