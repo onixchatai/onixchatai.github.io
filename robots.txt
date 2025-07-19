@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Sitemap: https://onixchatai.com/sitemap.xml
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+Crawl-delay: 1
