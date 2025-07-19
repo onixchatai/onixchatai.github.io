@@ -3,611 +3,1029 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="OnixChatAI - Smart Business Solutions. AI-powered chatbots and mobile ordering for small businesses in Burbank & San Fernando Valley.">
-    <meta name="keywords" content="chatbot, AI, restaurant ordering, small business, mobile app, customer service, Burbank, San Fernando Valley">
+    <meta name="description" content="OnixChatAI - AI-powered chatbot demo for restaurants and small businesses. Experience intelligent customer service and order taking.">
+    <meta name="keywords" content="chatbot, AI, restaurant ordering, customer service, demo, artificial intelligence">
     <meta name="author" content="Victor Sanchez - OnixChatAI">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="OnixChatAI">
+    <meta name="apple-mobile-web-app-title" content="OnixChatAI Chatbot">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="OnixChatAI - Smart Business Solutions">
-    <meta property="og:description" content="AI-powered chatbots and mobile ordering for small businesses">
-    <meta property="og:image" content="https://onixchatai.com/icon.png">
-    <meta property="og:url" content="https://onixchatai.com">
+    <meta property="og:title" content="OnixChatAI - AI Chatbot Demo">
+    <meta property="og:description" content="Experience our intelligent AI chatbot for restaurants and small businesses">
+    <meta property="og:image" content="https://onixchatai.com/chatbot-preview.png">
+    <meta property="og:url" content="https://onixchatai.com/chatbot">
     <meta property="og:type" content="website">
     
-    <title>OnixChatAI - Smart Business Solutions | AI Chatbots & Mobile Ordering</title>
+    <title>OnixChatAI - AI Chatbot Demo | Smart Customer Service</title>
     
     <!-- Favicon -->
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="apple-touch-icon" href="/icon.png">
     
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
     <!-- Tailwind CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Custom Styles -->
     <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .feature-card {
-            transition: all 0.3s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
+        
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        .pulse-dot {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
             top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
         }
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .btn-primary:hover::before {
+            left: 100%;
         }
-        .modal-content {
-            background: white;
-            padding: 2rem;
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .chat-container {
+            height: calc(100vh - 200px);
+            min-height: 500px;
+            max-height: 700px;
+            border: 2px solid #e5e7eb;
             border-radius: 1rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
+            background: linear-gradient(to bottom, #f8fafc, #ffffff);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        .chat-demo {
-            height: 400px;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-            background: #f9fafb;
-            padding: 1rem;
-            overflow-y: auto;
-            margin: 1rem 0;
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem 1rem 0 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #f8fafc;
+        }
+        
+        .chat-input-area {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 1rem 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
         .chat-message {
-            margin: 0.5rem 0;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            max-width: 80%;
+            margin: 1rem 0;
+            padding: 1rem 1.25rem;
+            border-radius: 1.25rem;
+            max-width: 85%;
+            word-wrap: break-word;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+        
         .chat-message.user {
-            background: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
             margin-left: auto;
+            border-bottom-right-radius: 0.25rem;
         }
+        
         .chat-message.bot {
-            background: #e5e7eb;
+            background: white;
             color: #374151;
+            border: 1px solid #e5e7eb;
+            border-bottom-left-radius: 0.25rem;
         }
+        
         .typing-indicator {
             display: none;
-            padding: 0.5rem;
+            padding: 1rem 1.25rem;
             font-style: italic;
             color: #6b7280;
+            background: white;
+            border-radius: 1.25rem;
+            max-width: 200px;
+            margin: 1rem 0;
+            border: 1px solid #e5e7eb;
+            animation: pulse 1.5s infinite;
         }
+        
         .typing-indicator.active {
             display: block;
         }
+        
+        .typing-dots {
+            display: inline-flex;
+            gap: 4px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #6b7280;
+            animation: typingBounce 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        .quick-action-btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+        
+        .quick-action-btn:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+        
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        
+        .loading-spinner {
+            border: 2px solid #f3f4f6;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .chat-feature {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .chat-feature:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: calc(100vh - 150px);
+                margin: 1rem;
+            }
+            
+            .chat-message {
+                max-width: 90%;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .chat-message,
+            .typing-indicator,
+            .btn-primary {
+                animation: none;
+                transition: none;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .chat-container {
+                background: linear-gradient(to bottom, #1f2937, #111827);
+                border-color: #374151;
+            }
+            
+            .chat-messages {
+                background: #1f2937;
+            }
+            
+            .chat-input-area {
+                background: #111827;
+                border-color: #374151;
+            }
+            
+            .chat-message.bot {
+                background: #374151;
+                color: white;
+                border-color: #4b5563;
+            }
+            
+            .typing-indicator {
+                background: #374151;
+                color: #d1d5db;
+                border-color: #4b5563;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center text-white font-bold text-xl">
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center text-white font-bold text-2xl">
                         O
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-gray-900">OnixChatAI</h1>
-                        <p class="text-xs text-gray-600">Smart Business Solutions</p>
+                        <h1 class="text-2xl font-bold">OnixChatAI Demo</h1>
+                        <p class="text-sm opacity-90">Experience Intelligent Customer Service</p>
                     </div>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="#features" class="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-                    <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition-colors">Pricing</a>
-                    <a href="#contact" class="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
-                    <button 
-                        onclick="showDemo()"
-                        class="btn-primary text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all flex items-center gap-2"
-                    >
-                        ▶ Live Demo
-                    </button>
+                <div class="hidden md:flex items-center gap-4">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>AI Online</span>
+                    </div>
+                    <a href="/" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-all">
+                        ← Back to Website
+                    </a>
                 </div>
+            </div>
+        </div>
+    </header>
 
-                <!-- Mobile Menu Button -->
-                <button 
-                    class="md:hidden"
-                    onclick="toggleMobileMenu()"
-                    id="mobileMenuBtn"
-                >
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Demo Info -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                </button>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="md:hidden border-t py-4 hidden">
-                <div class="flex flex-col gap-4">
-                    <a href="#features" class="text-gray-600">Features</a>
-                    <a href="#pricing" class="text-gray-600">Pricing</a>
-                    <a href="#contact" class="text-gray-600">Contact</a>
-                    <button 
-                        onclick="showDemo()"
-                        class="btn-primary text-white px-4 py-2 rounded-lg self-start"
-                    >
-                        Live Demo
-                    </button>
                 </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="gradient-bg py-20 text-white">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">
-                Empower Your Small Business with
-                <span class="text-yellow-300">AI Intelligence</span>
-            </h1>
-            <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">
-                Professional chatbots, mobile ordering, and smart marketing tools that help small businesses compete with enterprise-level solutions.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button 
-                    onclick="showDemo()"
-                    class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
-                >
-                    🚀 Try Live Demo
-                </button>
-                <button 
-                    onclick="window.open('tel:8183358825')"
-                    class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all flex items-center justify-center gap-2"
-                >
-                    📞 Call (818) 335-8825
-                </button>
-            </div>
-            
-            <!-- Status Indicator -->
-            <div class="mt-8 flex items-center justify-center gap-2">
-                <div class="pulse-dot w-3 h-3 bg-green-400 rounded-full"></div>
-                <span class="text-sm opacity-90">Online & Ready to Help Burbank Businesses</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-4">Everything Your Business Needs</h2>
-            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-                Complete AI-powered solutions designed specifically for restaurants, cafes, and small businesses in the San Fernando Valley.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- AI Chatbots -->
-                <div class="feature-card text-center p-8 rounded-xl border bg-white">
-                    <div class="w-16 h-16 bg-blue-100 rounded-xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">🤖 AI Chatbots</h3>
-                    <p class="text-gray-600 mb-4">24/7 customer service, order taking, and smart upselling that never sleeps.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li>• Handles customer questions instantly</li>
-                        <li>• Takes orders automatically</li>
-                        <li>• Suggests additional items</li>
-                        <li>• Works in multiple languages</li>
-                    </ul>
-                </div>
-
-                <!-- Mobile Ordering -->
-                <div class="feature-card text-center p-8 rounded-xl border bg-white">
-                    <div class="w-16 h-16 bg-green-100 rounded-xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">📱 Mobile Ordering</h3>
-                    <p class="text-gray-600 mb-4">Professional ordering app that customers can install and use offline.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li>• Works on any phone or tablet</li>
-                        <li>• Functions even without internet</li>
-                        <li>• Loyalty points and rewards</li>
-                        <li>• Group ordering for offices</li>
-                    </ul>
-                </div>
-
-                <!-- Smart Analytics -->
-                <div class="feature-card text-center p-8 rounded-xl border bg-white">
-                    <div class="w-16 h-16 bg-purple-100 rounded-xl mx-auto mb-6 flex items-center justify-center">
-                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 00-2 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">📊 Smart Analytics</h3>
-                    <p class="text-gray-600 mb-4">Real-time insights, customer behavior, and revenue optimization tools.</p>
-                    <ul class="text-sm text-gray-500 space-y-1">
-                        <li>• Track sales in real-time</li>
-                        <li>• Customer behavior insights</li>
-                        <li>• Revenue optimization</li>
-                        <li>• Automated reporting</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-4">Simple, Transparent Pricing</h2>
-            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-                No hidden fees, no long-term contracts. Choose the plan that fits your business needs.
-            </p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Starter Plan -->
-                <div class="bg-white p-8 rounded-xl border text-center">
-                    <h3 class="text-xl font-bold mb-4">Starter</h3>
-                    <div class="text-3xl font-bold mb-4">$99<span class="text-lg text-gray-600">/month</span></div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-8">
-                        <li>✓ Basic AI chatbot</li>
-                        <li>✓ Mobile ordering app</li>
-                        <li>✓ Basic analytics</li>
-                        <li>✓ Email support</li>
-                    </ul>
-                    <button class="w-full btn-primary text-white py-3 rounded-lg">Get Started</button>
-                </div>
-
-                <!-- Professional Plan -->
-                <div class="bg-white p-8 rounded-xl border text-center relative">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                        <span class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm">Most Popular</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Professional</h3>
-                    <div class="text-3xl font-bold mb-4">$199<span class="text-lg text-gray-600">/month</span></div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-8">
-                        <li>✓ Advanced AI chatbot</li>
-                        <li>✓ Mobile ordering app</li>
-                        <li>✓ Advanced analytics</li>
-                        <li>✓ Priority support</li>
-                        <li>✓ Custom integrations</li>
-                    </ul>
-                    <button class="w-full btn-primary text-white py-3 rounded-lg">Get Started</button>
-                </div>
-
-                <!-- Enterprise Plan -->
-                <div class="bg-white p-8 rounded-xl border text-center">
-                    <h3 class="text-xl font-bold mb-4">Enterprise</h3>
-                    <div class="text-3xl font-bold mb-4">$399<span class="text-lg text-gray-600">/month</span></div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-8">
-                        <li>✓ Full AI suite</li>
-                        <li>✓ Multi-location support</li>
-                        <li>✓ Complete analytics</li>
-                        <li>✓ 24/7 phone support</li>
-                        <li>✓ Custom development</li>
-                    </ul>
-                    <button class="w-full btn-primary text-white py-3 rounded-lg">Contact Us</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-4">Get Started Today</h2>
-            <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-                Ready to transform your business? Contact Victor Sanchez for a free consultation and see how OnixChatAI can help your business grow.
-            </p>
-            
-            <div class="max-w-2xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-blue-100 rounded-xl mx-auto mb-4 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Call Now</h3>
-                        <p class="text-gray-600 mb-4">Speak directly with Victor</p>
-                        <button 
-                            onclick="window.open('tel:8183358825')"
-                            class="btn-primary text-white px-6 py-3 rounded-lg"
-                        >
-                            (818) 335-8825
-                        </button>
-                    </div>
-                    
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-green-100 rounded-xl mx-auto mb-4 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Try Demo</h3>
-                        <p class="text-gray-600 mb-4">See it in action</p>
-                        <button 
-                            onclick="showDemo()"
-                            class="btn-primary text-white px-6 py-3 rounded-lg"
-                        >
-                            Live Demo
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                            O
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold">OnixChatAI</h3>
-                            <p class="text-sm text-gray-400">Smart Business Solutions</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400">
-                        Empowering small businesses in Burbank and San Fernando Valley with AI-powered solutions.
+                    <h2 class="text-lg font-bold text-blue-900 mb-2">🤖 Live AI Chatbot Demo</h2>
+                    <p class="text-blue-800 text-sm leading-relaxed">
+                        This is a working demonstration of our AI chatbot for <strong>Tony's Pizza</strong>. 
+                        Your chatbot would be completely customized with your business information, menu, hours, and services. 
+                        Try asking about the menu, placing an order, or checking store hours!
                     </p>
                 </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4">Services</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>AI Chatbots</li>
-                        <li>Mobile Ordering</li>
-                        <li>Smart Analytics</li>
-                        <li>Custom Solutions</li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>Documentation</li>
-                        <li>Training</li>
-                        <li>24/7 Support</li>
-                        <li>Community</li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4">Contact</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>📞 (818) 335-8825</li>
-                        <li>📧 victor@onixchatai.com</li>
-                        <li>📍 Burbank, CA</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 OnixChatAI. All rights reserved. | Created by Victor Sanchez</p>
             </div>
         </div>
-    </footer>
 
-    <!-- Demo Modal -->
-    <div id="demoModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold">AI Chatbot Demo</h3>
-                <button onclick="hideDemo()" class="text-gray-500 hover:text-gray-700">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="chat-demo" id="chatDemo">
-                <div class="chat-message bot">
-                    <strong>OnixBot:</strong> Hello! Welcome to Tony's Pizza! How can I help you today? 🍕
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Chatbot Interface -->
+            <div class="lg:col-span-3">
+                <div class="chat-container">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                    <span class="text-lg">🍕</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Tony's Pizza</h3>
+                                    <div class="status-indicator">
+                                        <div class="status-dot"></div>
+                                        <span>OnixBot Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button 
+                                onclick="clearChat()"
+                                class="bg-white bg-opacity-20 hover:bg-opacity-30 p-2 rounded-lg transition-all"
+                                title="Clear chat"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Messages -->
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Welcome message will be added here -->
+                    </div>
+                    
+                    <!-- Typing Indicator -->
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="flex items-center gap-2">
+                            <div class="loading-spinner"></div>
+                            <span>OnixBot is typing</span>
+                            <div class="typing-dots">
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Input Area -->
+                    <div class="chat-input-area">
+                        <!-- Quick Actions -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 quick-actions">
+                            <button onclick="sendQuickMessage('What\'s on the menu?')" class="quick-action-btn px-3 py-2 rounded-lg text-sm text-left">
+                                💬 Menu
+                            </button>
+                            <button onclick="sendQuickMessage('I want to order a pizza')" class="quick-action-btn px-3 py-2 rounded-lg text-sm text-left">
+                                🍕 Order Pizza
+                            </button>
+                            <button onclick="sendQuickMessage('What are your hours?')" class="quick-action-btn px-3 py-2 rounded-lg text-sm text-left">
+                                🕐 Hours
+                            </button>
+                            <button onclick="sendQuickMessage('Do you deliver?')" class="quick-action-btn px-3 py-2 rounded-lg text-sm text-left">
+                                🚗 Delivery
+                            </button>
+                        </div>
+                        
+                        <!-- Input Field -->
+                        <div class="flex gap-3">
+                            <input 
+                                type="text" 
+                                id="chatInput" 
+                                placeholder="Type your message..."
+                                class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+                                onkeypress="handleKeyPress(event)"
+                                maxlength="500"
+                                autocomplete="off"
+                            >
+                            <button 
+                                onclick="sendMessage()" 
+                                class="btn-primary text-white px-6 py-3 rounded-xl flex items-center gap-2 flex-shrink-0"
+                                id="sendButton"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                                </svg>
+                                <span class="hidden sm:inline">Send</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Character Counter -->
+                        <div class="mt-2 text-xs text-gray-500 text-right">
+                            <span id="charCounter">0</span>/500 characters
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="typing-indicator" id="typingIndicator">
-                OnixBot is typing...
-            </div>
-            
-            <div class="flex gap-2">
-                <input 
-                    type="text" 
-                    id="chatInput" 
-                    placeholder="Type your message..."
-                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onkeypress="handleKeyPress(event)"
-                >
-                <button onclick="sendMessage()" class="btn-primary text-white px-6 py-2 rounded-lg">
-                    Send
-                </button>
-            </div>
-            
-            <div class="mt-4 text-sm text-gray-600">
-                <p><strong>Try asking:</strong> "What's on the menu?" or "I want to order a pizza"</p>
+            <!-- Sidebar Features -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Features -->
+                <div class="chat-feature p-6 rounded-xl">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <span class="text-2xl">⚡</span>
+                        AI Features
+                    </h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Instant responses 24/7</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Order taking & upselling</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Multi-language support</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Menu recommendations</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-green-500">✓</span>
+                            <span>Store information</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sample Questions -->
+                <div class="chat-feature p-6 rounded-xl">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <span class="text-2xl">💡</span>
+                        Try Asking
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <button onclick="sendQuickMessage('What\'s your most popular pizza?')" class="w-full text-left p-2 rounded hover:bg-gray-100 transition-colors">
+                            "What's your most popular pizza?"
+                        </button>
+                        <button onclick="sendQuickMessage('How much is a large pepperoni pizza?')" class="w-full text-left p-2 rounded hover:bg-gray-100 transition-colors">
+                            "How much is a large pepperoni?"
+                        </button>
+                        <button onclick="sendQuickMessage('What deals do you have today?')" class="w-full text-left p-2 rounded hover:bg-gray-100 transition-colors">
+                            "What deals do you have today?"
+                        </button>
+                        <button onclick="sendQuickMessage('Can I pay with Apple Pay?')" class="w-full text-left p-2 rounded hover:bg-gray-100 transition-colors">
+                            "Can I pay with Apple Pay?"
+                        </button>
+                        <button onclick="sendQuickMessage('Where are you located?')" class="w-full text-left p-2 rounded hover:bg-gray-100 transition-colors">
+                            "Where are you located?"
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="chat-feature p-6 rounded-xl">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <span class="text-2xl">📞</span>
+                        Like This Demo?
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        Get a custom AI chatbot for your business that works just like this!
+                    </p>
+                    <div class="space-y-3">
+                        <button 
+                            onclick="window.open('tel:8183358825')"
+                            class="w-full btn-primary text-white py-3 rounded-lg text-sm font-semibold"
+                        >
+                            📞 Call (818) 335-8825
+                        </button>
+                        <button 
+                            onclick="window.open('mailto:victor@onixchatai.com?subject=Chatbot Demo Interest&body=Hi Victor, I tried your chatbot demo and I am interested in getting one for my business. Please contact me to discuss.')"
+                            class="w-full bg-gray-600 text-white py-3 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors"
+                        >
+                            📧 Email Us
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
+    <!-- JavaScript -->
     <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+        // Initialize chat
+        let messageCount = 0;
+        let isTyping = false;
+
+        // Initialize welcome message
+        document.addEventListener('DOMContentLoaded', function() {
+            addMessage('Hello! Welcome to Tony\'s Pizza! 🍕 I\'m OnixBot, your AI assistant. I\'m here to help you with your order, answer questions about our menu, or provide store information. What can I help you with today?', 'bot');
+            updateCharCounter();
+            
+            // Focus input
+            document.getElementById('chatInput').focus();
+        });
+
+        // Character counter
+        function updateCharCounter() {
+            const input = document.getElementById('chatInput');
+            const counter = document.getElementById('charCounter');
+            
+            input.addEventListener('input', function() {
+                const length = this.value.length;
+                counter.textContent = length;
+                
+                if (length > 400) {
+                    counter.style.color = '#ef4444';
+                } else if (length > 300) {
+                    counter.style.color = '#f59e0b';
+                } else {
+                    counter.style.color = '#6b7280';
+                }
+            });
         }
 
-        // Demo modal functions
-        function showDemo() {
-            document.getElementById('demoModal').classList.add('active');
-        }
-
-        function hideDemo() {
-            document.getElementById('demoModal').classList.remove('active');
-        }
-
-        // Chat functionality
+        // Handle key press
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
                 sendMessage();
             }
         }
 
+        // Send quick message
+        function sendQuickMessage(message) {
+            document.getElementById('chatInput').value = message;
+            sendMessage();
+        }
+
+        // Send message
         function sendMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
             
-            if (!message) return;
+            if (!message || isTyping) return;
+            
+            // Disable send button temporarily
+            const sendButton = document.getElementById('sendButton');
+            sendButton.disabled = true;
+            sendButton.innerHTML = '<div class="loading-spinner"></div>';
             
             // Add user message
             addMessage(message, 'user');
             input.value = '';
+            updateCharCounter();
             
             // Show typing indicator
             showTyping();
             
-            // Simulate bot response
+            // Simulate realistic response delay
+            const delay = Math.random() * 1500 + 1500; // 1.5-3 seconds
             setTimeout(() => {
                 hideTyping();
                 const botResponse = getBotResponse(message);
                 addMessage(botResponse, 'bot');
-            }, 1500);
+                
+                // Re-enable send button
+                sendButton.disabled = false;
+                sendButton.innerHTML = `
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                    <span class="hidden sm:inline">Send</span>
+                `;
+                
+                // Focus input
+                input.focus();
+            }, delay);
         }
 
+        // Add message to chat
         function addMessage(message, sender) {
-            const chatDemo = document.getElementById('chatDemo');
+            messageCount++;
+            const chatMessages = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${sender}`;
+            messageDiv.id = `message-${messageCount}`;
+            
+            const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             
             if (sender === 'user') {
-                messageDiv.innerHTML = `<strong>You:</strong> ${message}`;
+                messageDiv.innerHTML = `
+                    <div class="font-semibold mb-1">You</div>
+                    <div>${escapeHtml(message)}</div>
+                    <div class="text-xs opacity-75 mt-2">${timestamp}</div>
+                `;
             } else {
-                messageDiv.innerHTML = `<strong>OnixBot:</strong> ${message}`;
+                messageDiv.innerHTML = `
+                    <div class="font-semibold mb-1 flex items-center gap-2">
+                        <span>🤖</span>
+                        OnixBot
+                    </div>
+                    <div>${message}</div>
+                    <div class="text-xs opacity-75 mt-2">${timestamp}</div>
+                `;
             }
             
-            chatDemo.appendChild(messageDiv);
-            chatDemo.scrollTop = chatDemo.scrollHeight;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Track analytics
+            trackMessage(sender, message);
         }
 
+        // Show typing indicator
         function showTyping() {
-            document.getElementById('typingIndicator').classList.add('active');
+            isTyping = true;
+            const indicator = document.getElementById('typingIndicator');
+            indicator.classList.add('active');
+            
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
+        // Hide typing indicator
         function hideTyping() {
-            document.getElementById('typingIndicator').classList.remove('active');
+            isTyping = false;
+            const indicator = document.getElementById('typingIndicator');
+            indicator.classList.remove('active');
+            
+            // Move back to original position
+            const chatContainer = document.querySelector('.chat-container');
+            chatContainer.appendChild(indicator);
         }
 
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Get bot response
         function getBotResponse(message) {
             const lowerMessage = message.toLowerCase();
             
-            if (lowerMessage.includes('menu') || lowerMessage.includes('what do you have')) {
-                return 'Great! We have delicious pizzas, pasta, salads, and appetizers. Our most popular pizzas are Margherita ($12), Pepperoni ($14), and Supreme ($16). What sounds good to you? 🍕';
-            } else if (lowerMessage.includes('order') || lowerMessage.includes('pizza')) {
-                return 'Perfect! What size pizza would you like? We have Small ($10), Medium ($14), or Large ($18). What toppings would you prefer? 🍕';
-            } else if (lowerMessage.includes('hours') || lowerMessage.includes('open')) {
-                return 'We\'re open Monday-Sunday from 11 AM to 10 PM. We also offer delivery through our mobile app until 9:30 PM! 🕐';
-            } else if (lowerMessage.includes('delivery') || lowerMessage.includes('pickup')) {
-                return 'We offer both delivery and pickup! Delivery is $3.99 and takes 25-35 minutes. Pickup is ready in 15-20 minutes. Which would you prefer? 🚗';
-            } else if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-                return 'Our prices are very reasonable! Small pizzas start at $10, Medium at $14, and Large at $18. We also have combo deals - would you like to hear about our Family Special? 💰';
-            } else if (lowerMessage.includes('special') || lowerMessage.includes('deal')) {
-                return 'Our Family Special is amazing! Get 2 Large pizzas, garlic bread, and a 2-liter soda for just $29.99 (reg. $38). Perfect for feeding the whole family! 👨‍👩‍👧‍👦';
-            } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-                return 'Hello there! Welcome to Tony\'s Pizza! I\'m here to help you with your order. What can I get started for you today? 😊';
-            } else if (lowerMessage.includes('thank')) {
-                return 'You\'re very welcome! Is there anything else I can help you with today? Maybe some delicious garlic bread or a cold drink? 🥤';
-            } else {
-                return 'I\'d be happy to help! You can ask me about our menu, prices, hours, or place an order. What would you like to know? 🤔';
+            // Menu inquiries
+            if (lowerMessage.includes('menu') || lowerMessage.includes('what do you have') || lowerMessage.includes('food') || lowerMessage.includes('eat')) {
+                return `Great! We have an amazing selection of fresh Italian food! 🍕<br><br>
+                    <strong>🍕 Popular Pizzas:</strong><br>
+                    • Margherita - $12 (Fresh mozzarella, basil, tomato sauce)<br>
+                    • Pepperoni - $14 (Classic pepperoni with mozzarella)<br>
+                    • Supreme - $16 (Pepperoni, sausage, peppers, onions, mushrooms)<br>
+                    • BBQ Chicken - $15 (BBQ sauce, grilled chicken, red onions)<br>
+                    • Meat Lovers - $18 (Pepperoni, sausage, ham, bacon)<br><br>
+                    <strong>🍝 Other Options:</strong><br>
+                    • Pasta dishes, fresh salads, garlic bread, desserts<br><br>
+                    What sounds delicious to you? I can help you place an order! 😊`;
+            }
+            
+            // Ordering
+            else if (lowerMessage.includes('order') || lowerMessage.includes('pizza') || lowerMessage.includes('want') || lowerMessage.includes('buy')) {
+                return `Perfect! I'd love to help you order! 🍕<br><br>
+                    <strong>Pizza Sizes & Base Prices:</strong><br>
+                    📏 <strong>Small</strong> (10") - $10<br>
+                    📏 <strong>Medium</strong> (12") - $14<br>
+                    📏 <strong>Large</strong> (16") - $18<br>
+                    📏 <strong>Extra Large</strong> (18") - $22<br><br>
+                    <strong>What would you like?</strong><br>
+                    • What size pizza interests you?<br>
+                    • Any specific toppings in mind?<br>
+                    • Would you like to hear about our combo deals?<br><br>
+                    Just let me know and I'll get your order started! 🎯`;
+            }
+            
+            // Hours
+            else if (lowerMessage.includes('hours') || lowerMessage.includes('open') || lowerMessage.includes('close') || lowerMessage.includes('time')) {
+                return `We're open every day to serve you! 🕐<br><br>
+                    <strong>📅 Store Hours:</strong><br>
+                    • <strong>Monday - Thursday:</strong> 11:00 AM - 10:00 PM<br>
+                    • <strong>Friday - Saturday:</strong> 11:00 AM - 11:00 PM<br>
+                    • <strong>Sunday:</strong> 12:00 PM - 9:00 PM<br><br>
+                    <strong>🚗 Delivery Available:</strong><br>
+                    • Until 30 minutes before closing<br>
+                    • Through our mobile app or by phone<br><br>
+                    We're currently <strong>OPEN</strong> and ready to take your order! Would you like to order something delicious? 🍕`;
+            }
+            
+            // Delivery & Pickup
+            else if (lowerMessage.includes('delivery') || lowerMessage.includes('deliver') || lowerMessage.includes('pickup') || lowerMessage.includes('pick up')) {
+                return `Yes! We offer both delivery and pickup! 🚗<br><br>
+                    <strong>🚗 Delivery:</strong><br>
+                    • $3.99 delivery fee<br>
+                    • 25-35 minutes average time<br>
+                    • Free delivery on orders over $25<br>
+                    • Covers most of Burbank and surrounding areas<br><br>
+                    <strong>🏃 Pickup:</strong><br>
+                    • FREE - no extra cost!<br>
+                    • Ready in 15-20 minutes<br>
+                    • Call ahead or order online<br>
+                    • Easy parking available<br><br>
+                    <strong>🎯 Which would you prefer?</strong> I can help you get started with either option!`;
+            }
+            
+            // Pricing
+            else if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much') || lowerMessage.includes('expensive')) {
+                return `Our prices are very reasonable for the quality we offer! 💰<br><br>
+                    <strong>🍕 Pizza Pricing:</strong><br>
+                    • Small (10") - Starting at $10<br>
+                    • Medium (12") - Starting at $14<br>
+                    • Large (16") - Starting at $18<br>
+                    • Extra Large (18") - Starting at $22<br><br>
+                    <strong>🎉 Amazing Deals:</strong><br>
+                    • <strong>Family Special:</strong> 2 Large pizzas + garlic bread + 2-liter soda = $32.99 (save $10!)<br>
+                    • <strong>Lunch Special:</strong> Personal pizza + drink = $8.99 (11 AM - 3 PM)<br>
+                    • <strong>Mobile App:</strong> 15% off your first order<br><br>
+                    Want to hear about any specific items or deals? 🤔`;
+            }
+            
+            // Specials/deals
+            else if (lowerMessage.includes('special') || lowerMessage.includes('deal') || lowerMessage.includes('combo') || lowerMessage.includes('discount') || lowerMessage.includes('promotion')) {
+                return `We have some fantastic deals right now! 🎉<br><br>
+                    <strong>🏆 TODAY'S SPECIALS:</strong><br><br>
+                    <strong>1. Family Feast Special:</strong><br>
+                    • 2 Large pizzas (your choice)<br>
+                    • Fresh garlic bread<br>
+                    • 2-liter Coca-Cola<br>
+                    • <strong>Just $32.99</strong> (regularly $42.99) - Save $10!<br><br>
+                    <strong>2. Lunch Power Deal:</strong><br>
+                    • Personal 8" pizza + side + drink<br>
+                    • <strong>$8.99</strong> (Available 11 AM - 3 PM)<br><br>
+                    <strong>3. First-Time App Users:</strong><br>
+                    • 15% off your entire first order<br>
+                    • Download our mobile app!<br><br>
+                    <strong>4. Student Discount:</strong><br>
+                    • 10% off with valid student ID<br><br>
+                    Which deal interests you most? I can help you order! 🍕`;
+            }
+            
+            // Greetings
+            else if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey') || lowerMessage.includes('good morning') || lowerMessage.includes('good afternoon')) {
+                return `Hello there! 😊 Welcome to Tony's Pizza! I'm OnixBot, your friendly AI assistant.<br><br>
+                    I'm here to help you with:<br>
+                    🍕 Menu information and recommendations<br>
+                    📱 Placing orders for pickup or delivery<br>
+                    🕐 Store hours and location details<br>
+                    💰 Current deals and specials<br>
+                    📞 General questions about our services<br><br>
+                    What can I help you with today? I'd love to get you some delicious food! 🎯`;
+            }
+            
+            // Thanks
+            else if (lowerMessage.includes('thank') || lowerMessage.includes('thanks') || lowerMessage.includes('appreciate')) {
+                return `You're so welcome! 😊 I'm here to help anytime!<br><br>
+                    Is there anything else I can assist you with today?<br><br>
+                    Maybe:<br>
+                    🥖 Some delicious garlic bread to go with your order?<br>
+                    🥤 A cold drink or dessert?<br>
+                    🍕 Information about our loyalty program?<br>
+                    📱 Help downloading our mobile app for faster ordering?<br><br>
+                    I'm here to make sure you have the perfect meal! ✨`;
+            }
+            
+            // Location/address
+            else if (lowerMessage.includes('where') || lowerMessage.includes('address') || lowerMessage.includes('location') || lowerMessage.includes('find you')) {
+                return `We're conveniently located in the heart of Burbank! 📍<br><br>
+                    <strong>🏪 Tony's Pizza</strong><br>
+                    123 Main Street<br>
+                    Burbank, CA 91502<br><br>
+                    <strong>🚗 Easy to Find:</strong><br>
+                    • Right off the main street<br>
+                    • Plenty of free parking available<br>
+                    • Near the Burbank Town Center<br>
+                    • Accessible by bus (lines 94, 165)<br><br>
+                    <strong>📱 Navigation:</strong><br>
+                    • Search "Tony's Pizza Burbank" in Google Maps<br>
+                    • We're the one with the big red awning!<br><br>
+                    Need directions or want to place an order for pickup? 🎯`;
+            }
+            
+            // Payment
+            else if (lowerMessage.includes('pay') || lowerMessage.includes('payment') || lowerMessage.includes('card') || lowerMessage.includes('cash') || lowerMessage.includes('apple pay') || lowerMessage.includes('venmo')) {
+                return `We accept all major payment methods for your convenience! 💳<br><br>
+                    <strong>💰 Payment Options:</strong><br><br>
+                    <strong>In-Store & Pickup:</strong><br>
+                    ✅ Cash<br>
+                    ✅ Credit/Debit Cards (Visa, MasterCard, Amex, Discover)<br>
+                    ✅ Apple Pay & Google Pay<br>
+                    ✅ Samsung Pay<br><br>
+                    <strong>Delivery & Online:</strong><br>
+                    ✅ All credit/debit cards<br>
+                    ✅ PayPal<br>
+                    ✅ Venmo<br>
+                    ✅ Apple Pay (through our app)<br><br>
+                    <strong>🔒 Security:</strong> All payments are encrypted and secure!<br><br>
+                    Ready to place your order? What payment method works best for you? 🎯`;
+            }
+            
+            // Popular items
+            else if (lowerMessage.includes('popular') || lowerMessage.includes('best') || lowerMessage.includes('recommend') || lowerMessage.includes('favorite')) {
+                return `Great question! Here are our customer favorites! ⭐<br><br>
+                    <strong>🏆 MOST POPULAR PIZZAS:</strong><br><br>
+                    <strong>1. Supreme Pizza (Large) - $16</strong><br>
+                    • Pepperoni, Italian sausage, bell peppers, onions, mushrooms<br>
+                    • Our #1 seller! 🥇<br><br>
+                    <strong>2. Margherita Pizza (Large) - $12</strong><br>
+                    • Fresh mozzarella, basil, tomato sauce<br>
+                    • Simple and delicious! 🌿<br><br>
+                    <strong>3. Meat Lovers (Large) - $18</strong><br>
+                    • Pepperoni, sausage, ham, bacon<br>
+                    • For serious meat fans! 🥓<br><br>
+                    <strong>🔥 CUSTOMER FAVORITES:</strong><br>
+                    • BBQ Chicken Pizza - Sweet and savory!<br>
+                    • Garlic Bread - Perfect side dish<br>
+                    • Tiramisu - Amazing homemade dessert<br><br>
+                    Which one sounds tempting to you? 😋`;
+            }
+            
+            // Size questions
+            else if (lowerMessage.includes('size') || lowerMessage.includes('large') || lowerMessage.includes('small') || lowerMessage.includes('medium')) {
+                return `Let me break down our pizza sizes for you! 📏<br><br>
+                    <strong>🍕 PIZZA SIZES & SERVINGS:</strong><br><br>
+                    <strong>Small (10"):</strong><br>
+                    • Perfect for 1-2 people<br>
+                    • 6 slices<br>
+                    • Starting at $10<br><br>
+                    <strong>Medium (12"):</strong><br>
+                    • Great for 2-3 people<br>
+                    • 8 slices<br>
+                    • Starting at $14<br><br>
+                    <strong>Large (16"):</strong><br>
+                    • Ideal for 3-4 people<br>
+                    • 8 large slices<br>
+                    • Starting at $18<br>
+                    • <strong>Most popular choice!</strong> 🏆<br><br>
+                    <strong>Extra Large (18"):</strong><br>
+                    • Perfect for 4-6 people<br>
+                    • 10 slices<br>
+                    • Starting at $22<br><br>
+                    How many people are you feeding? I can recommend the perfect size! 🎯`;
+            }
+            
+            // Ingredients/allergies
+            else if (lowerMessage.includes('ingredients') || lowerMessage.includes('allergy') || lowerMessage.includes('gluten') || lowerMessage.includes('vegan') || lowerMessage.includes('vegetarian')) {
+                return `We take dietary needs seriously! 🥗<br><br>
+                    <strong>🌱 DIETARY OPTIONS:</strong><br><br>
+                    <strong>Vegetarian Pizzas:</strong><br>
+                    • Margherita (mozzarella, basil, tomato)<br>
+                    • Veggie Supreme (peppers, onions, mushrooms, olives)<br>
+                    • Four Cheese (mozzarella, parmesan, ricotta, romano)<br><br>
+                    <strong>🌾 Gluten-Free:</strong><br>
+                    • Gluten-free crust available (+$3)<br>
+                    • 12" size only<br>
+                    • Made in shared kitchen (cross-contamination possible)<br><br>
+                    <strong>🥛 Dairy-Free:</strong><br>
+                    • Vegan cheese available (+$2)<br>
+                    • Many vegetables are naturally dairy-free<br><br>
+                    <strong>⚠️ Allergen Info:</strong><br>
+                    Our kitchen handles wheat, dairy, eggs, soy. Please inform us of any severe allergies!<br><br>
+                    What specific dietary needs do you have? I can suggest the perfect options! 🎯`;
+            }
+            
+            // Default responses with personality
+            else if (lowerMessage.includes('how are you') || lowerMessage.includes('how\'s it going')) {
+                return `I'm doing fantastic, thank you for asking! 😊 I love helping people discover our delicious pizza!<br><br>
+                    I'm here 24/7 and never get tired of talking about food! How are YOU doing today?<br><br>
+                    Are you hungry? I'd love to help you find the perfect meal! 🍕✨`;
+            }
+            
+            else if (lowerMessage.includes('who are you') || lowerMessage.includes('what are you')) {
+                return `I'm OnixBot, Tony's Pizza's AI assistant! 🤖<br><br>
+                    I'm here to help you with everything pizza-related:<br>
+                    • Taking your orders<br>
+                    • Answering menu questions<br>
+                    • Providing store information<br>
+                    • Helping with deals and specials<br><br>
+                    I was created by OnixChatAI to make ordering food easier and more fun! Think of me as your personal pizza advisor! 🍕<br><br>
+                    What can I help you discover today? 😊`;
+            }
+            
+            // Default helpful response
+            else {
+                const responses = [
+                    `I'd be happy to help! 🤔 You can ask me about:<br><br>
+                    🍕 Our menu and pizza options<br>
+                    💰 Prices and current deals<br>
+                    🕐 Store hours and location<br>
+                    🚗 Delivery and pickup options<br>
+                    📱 How to place an order<br>
+                    💳 Payment methods<br>
+                    🌟 Popular recommendations<br><br>
+                    What would you like to know? I'm here to help make your experience amazing! ✨`,
+                    
+                    `Great question! I'm here to help with anything Tony's Pizza related! 🍕<br><br>
+                    Some popular things to ask about:<br>
+                    • "What's your most popular pizza?"<br>
+                    • "How much does delivery cost?"<br>
+                    • "What deals do you have today?"<br>
+                    • "Can I customize my pizza?"<br><br>
+                    What sounds interesting to you? Let's get you some delicious food! 😋`,
+                    
+                    `I want to make sure I give you the best help possible! 🎯<br><br>
+                    Could you tell me more about what you're looking for?<br><br>
+                    For example:<br>
+                    🍕 Are you hungry and want to order?<br>
+                    📋 Do you need menu information?<br>
+                    📍 Are you looking for our location?<br>
+                    💰 Want to know about pricing?<br><br>
+                    I'm here to help with whatever you need! 😊`
+                ];
+                
+                return responses[Math.floor(Math.random() * responses.length)];
             }
         }
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // Clear chat
+        function clearChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            messageCount = 0;
+            
+            // Add welcome message back
+            setTimeout(() => {
+                addMessage('Hello! Welcome to Tony\'s Pizza! 🍕 I\'m OnixBot, your AI assistant. I\'m here to help you with your order, answer questions about our menu, or provide store information. What can I help you with today?', 'bot');
+            }, 500);
+        }
+
+        // Analytics tracking
+        function trackMessage(sender, message) {
+            // Track user interactions for analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'chatbot_message', {
+                    'event_category': 'chatbot',
+                    'event_label': sender,
+                    'value': message.length
+                });
+            }
+            
+            console.log(`Message tracked: ${sender} - ${message.substring(0, 50)}...`);
+        }
+
+        // Accessibility improvements
+        document.addEventListener('keydown', function(e) {
+            // Allow Escape to clear focus
+            if (e.key === 'Escape') {
+                document.getElementById('chatInput').blur();
+            }
+            
+            // Ctrl/Cmd + L to clear chat
+            if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    
-                    // Close mobile menu if open
-                    const mobileMenu = document.getElementById('mobileMenu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
+                clearChat();
+            }
+        });
+
+        // Auto-resize input (future enhancement)
+        function setupAutoResize() {
+            const input = document.getElementById('chatInput');
+            input.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+        }
+
+        // Performance optimization
+        function optimizeChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            const messages = chatMessages.children;
+            
+            // Limit messages to prevent memory issues
+            if (messages.length > 50) {
+                // Remove oldest messages
+                for (let i = 0; i < 10; i++) {
+                    if (messages[0] && !messages[0].classList.contains('typing-indicator')) {
+                        messages[0].remove();
                     }
                 }
-            });
-        });
-
-        // Close modal when clicking outside
-        document.getElementById('demoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                hideDemo();
             }
-        });
+        }
 
-        // Auto-focus chat input when modal opens
-        document.getElementById('demoModal').addEventListener('transitionend', function() {
-            if (this.classList.contains('active')) {
-                document.getElementById('chatInput').focus();
-            }
-        });
+        // Call optimization periodically
+        setInterval(optimizeChat, 30000); // Every 30 seconds
 
-        // Add some demo messages on load
-        window.addEventListener('load', function() {
-            // Add a welcome message to the chat demo
-            const chatDemo = document.getElementById('chatDemo');
-            const welcomeMessage = document.createElement('div');
-            welcomeMessage.className = 'chat-message bot';
-            welcomeMessage.innerHTML = '<strong>OnixBot:</strong> Hello! Welcome to Tony\'s Pizza! How can I help you today? 🍕';
-            chatDemo.appendChild(welcomeMessage);
+        // Initialize advanced features
+        document.addEventListener('DOMContentLoaded', function() {
+            setupAutoResize();
+            
+            // Add smooth scrolling for better UX
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.style.scrollBehavior = 'smooth';
+            
+            console.log('OnixChatAI Chatbot initialized successfully! 🚀');
         });
     </script>
 </body>
