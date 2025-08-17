@@ -1061,7 +1061,7 @@
             document.getElementById('typingIndicator').classList.add('active');
         }
 
-        function hideTyping() {
+        function showTyping() {
             document.getElementById('typingIndicator').classList.remove('active');
         }
 
@@ -1073,7 +1073,7 @@
             }
             
             if (lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('how much')) {
-                return '💰 Our pricing starts at $99/month for the Starter plan. We also have:\n\n• Professional Plan: $199/month (most popular)\n• Enterprise Plan: $399/month\n\nWould you like more details about any specific plan?';
+                return '💰 Our pricing starts at $199/month for the Starter plan. We also have:\n\n• Professional Plan: $399/month (most popular)\n• Enterprise Plan: $699/month\n\nWould you like more details about any specific plan?';
             }
             
             if (lowerMessage.includes('chatbot') || lowerMessage.includes('bot')) {
